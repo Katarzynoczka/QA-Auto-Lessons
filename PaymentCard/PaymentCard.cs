@@ -8,49 +8,24 @@ namespace PaymentCard
 {
     internal class PaymentCard
     {
-        private int Number;
-        private int ValidityYear;
-        private string Name;
-        private string SurName;
-        private int CVV;
+        public int Number { get; set; }
+        public Validity ValidityYear { get; set; }
+       
+        public Customer Name { get; set; }
+        public int CVV { get; set; }
 
-        public PaymentCard(int number, int validityYear, string name, string surName, int cvv)
+        public PaymentCard(int number, Validity validityYear, Customer name, int cvv)
         {
             Number = number;
             ValidityYear = validityYear;
             Name = name;
-            SurName = surName;
             CVV = cvv;
         }
 
-        public int GetNumber()
+        
+        public string GetFullInformation()
         {
-            return Number;
+            return String.Format("Number:{0}, Validity:{1}, Customer:{2}, CVV:{3}", Number, ValidityYear, Name, CVV);
         }
-
-        public int GetValidityYear()
-        {
-            return ValidityYear;
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public string GetSurName()
-        {
-            return SurName;
-        }
-
-        public int GetCVV()
-        {
-            return CVV;
-        }
-
-        /*public string GetFullInformation()
-        {
-            return String.Format("Number:{0}, Validity:{1}, Name:{2}, Surname:{3}, CVV:{4}", Number, ValidityYear, Name, SurName, CVV);
-        }*/
     }
 }
