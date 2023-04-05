@@ -49,5 +49,9 @@ namespace PaymentCard
             ValidityYear = validityYear;
         }
         
+        public override string ToString()
+        {
+            return ValidityDay + "/" + ValidityYear;
+        }
     }
 }

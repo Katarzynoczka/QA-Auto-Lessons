@@ -22,9 +22,9 @@ namespace PaymentCard
         }
 
       
-        public string GetFullInformation()
+        public override string ToString ()
         {
-            return String.Format("Name:{0}, Sur Name:{1}, Addres:{2}, Phone Number:{3}", Name, SurName, Addres, PhoneNumber);
+            return "Name:" + Name + ", Sur Name:" + SurName + ", Addres:" + Addres + ", Phone Number:" + PhoneNumber;
         }
 
     }

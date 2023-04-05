@@ -23,9 +23,9 @@ namespace PaymentCard
         }
 
         
-        public string GetFullInformation()
+        public virtual string GetFullInformation()
         {
-            return String.Format("Number:{0}, Validity:{1}, Customer:{2}, CVV:{3}", Number, ValidityYear, Name, CVV);
+            return String.Format("Number:{0}, Customer:{1}, Validity:{2}, CVV:{3}", Number, Name, ValidityYear, CVV);
         }
     }
 }
