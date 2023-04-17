@@ -1,0 +1,16 @@
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\bin\Debug\PaymentCard.exe.config
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\bin\Debug\PaymentCard.exe
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\bin\Debug\PaymentCard.pdb
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\obj\Debug\IPayment.csproj.AssemblyReference.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\obj\Debug\IPayment.csproj.SuggestedBindingRedirects.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\obj\Debug\IPayment.csproj.CoreCompileInputs.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\obj\Debug\PaymentCard.exe
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\PaymentCard\obj\Debug\PaymentCard.pdb
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\bin\Debug\PaymentCard.exe.config
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\bin\Debug\PaymentCard.exe
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\bin\Debug\PaymentCard.pdb
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\obj\Debug\IPayment.csproj.AssemblyReference.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\obj\Debug\IPayment.csproj.SuggestedBindingRedirects.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\obj\Debug\IPayment.csproj.CoreCompileInputs.cache
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\obj\Debug\PaymentCard.exe
+C:\Users\bayok\Documents\GitHub\QA-Auto-Lessons\IPayment\obj\Debug\PaymentCard.pdb
