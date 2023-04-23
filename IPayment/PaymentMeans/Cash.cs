@@ -8,32 +8,30 @@ namespace PaymentCard
 {
     internal class Cash : IPayment
     {
-        public BankClient BankClient { get; set; }
         public float BalanceCash { get; set; }
 
-        public Cash(BankClient bankClient, float balanceCash)
+        public Cash(float balanceCash)
         {
-            BankClient = bankClient;
             BalanceCash = balanceCash;
         }
 
-        public void MakePayment(float amount)
+        public bool MakePayment(float amount)
         {
             if (BalanceCash >= amount)
             {
                 BalanceCash -= amount;
-                Console.WriteLine($"Payment of {amount} has been made using cash");
+                return true;
             }
             else
             {
-                Console.WriteLine("Not enough cash to make the payment.");
+                return false;
             }
         }
 
         public void TopUp(float amount)
         {
             BalanceCash += amount;
-            Console.WriteLine("The balance has been topped up");
+            Console.WriteLine($"The balance has been topped up with {amount}");
         }
 
         public float GetBalance()

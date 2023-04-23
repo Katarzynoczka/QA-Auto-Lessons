@@ -12,16 +12,23 @@ namespace PaymentCard
         public string SurName { get; set; }
         public string Addres{ get; set; }
        
-        public List<IPayment> paymentMethods;
+        public List<IPayment> paymentMethods {  get; set; }
 
         public BankClient(string name, string surName, string addres)
         {
             Name = name;
             SurName = surName;
             Addres = addres;
+            paymentMethods = new List<IPayment>();
         }
 
-        public bool Pay(float amount, List<IPayment> paymentMethods)
+        public bool AddPaymentMethod(IPayment Mean)
+        {
+            paymentMethods.Add(Mean);
+            return true;
+        }
+
+        public bool Pay(float amount)
         {
             bool paymentSuccessful = false;
 
@@ -33,6 +40,7 @@ namespace PaymentCard
                     {
                         cash.MakePayment(amount);
                         paymentSuccessful = true;
+                        Console.WriteLine($"Payment {amount} made with Cash");
                         break;
                     }
                 }
@@ -42,6 +50,7 @@ namespace PaymentCard
                     {
                         cashBackCard.MakePayment(amount);
                         paymentSuccessful = true;
+                        Console.WriteLine($"Payment {amount} made with CashBackCard");
                         break;
                     }
                 }
@@ -51,6 +60,7 @@ namespace PaymentCard
                     {
                         debetCard.MakePayment(amount);
                         paymentSuccessful = true;
+                        Console.WriteLine($"Payment {amount} made with DebetCard");
                         break;
                     }
                 }
@@ -60,6 +70,7 @@ namespace PaymentCard
                     {
                         creditCard.MakePayment(amount);
                         paymentSuccessful = true;
+                        Console.WriteLine($"Payment {amount} made with CreditCard");
                         break;
                     }
                 }

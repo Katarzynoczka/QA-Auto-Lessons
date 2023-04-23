@@ -8,7 +8,7 @@ namespace PaymentCard
 {
     public interface IPayment
     {
-        void MakePayment(float amount);
+        bool MakePayment(float amount);
 
         void TopUp(float amount);
 
