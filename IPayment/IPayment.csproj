@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparers\ClientAddresComparer.cs" />
+    <Compile Include="Comparers\ClientMaxAmountOnOnePaymentMethod.cs" />
+    <Compile Include="Comparers\ClientPaymentMethodsCountComparer.cs" />
+    <Compile Include="Comparers\ClientTotalAmountMoneyComparer.cs" />
     <Compile Include="PaymentMeans\Cash.cs" />
     <Compile Include="PaymentCards\CashBackCard.cs" />
     <Compile Include="PaymentCards\CreditCard.cs" />

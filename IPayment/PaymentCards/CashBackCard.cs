@@ -13,7 +13,7 @@ namespace PaymentCard
         public float PercentCashBack { get; set; }
 
 
-        public CashBackCard(Validity validity, float balanceCashBack, float percentCashBack)
+        public CashBackCard(Validity validity, float balanceCashBack, float percentCashBack) 
         {
             Validity = validity;
             BalanceCashBack = balanceCashBack;

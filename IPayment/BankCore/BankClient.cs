@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    internal class BankClient
+    internal class BankClient 
     {
         public string Name { get; set; }
         public string SurName { get; set; }
@@ -21,7 +21,7 @@ namespace PaymentCard
             Addres = addres;
             paymentMethods = new List<IPayment>();
         }
-
+ 
         public bool AddPaymentMethod(IPayment Mean)
         {
             paymentMethods.Add(Mean);
@@ -31,7 +31,7 @@ namespace PaymentCard
         public bool Pay(float amount)
         {
             bool paymentSuccessful = false;
-
+            
             foreach (IPayment paymentMethod in paymentMethods)
             {
                 if (paymentMethod is Cash cash)
