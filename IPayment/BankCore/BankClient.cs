@@ -40,7 +40,7 @@ namespace PaymentCard
                     {
                         cash.MakePayment(amount);
                         paymentSuccessful = true;
-                        Console.WriteLine($"Payment {amount} made with Cash");
+                        Console.WriteLine($"\nPayment {amount} made with Cash");
                         break;
                     }
                 }
@@ -50,7 +50,7 @@ namespace PaymentCard
                     {
                         cashBackCard.MakePayment(amount);
                         paymentSuccessful = true;
-                        Console.WriteLine($"Payment {amount} made with CashBackCard");
+                        Console.WriteLine($"\nPayment {amount} made with CashBackCard");
                         break;
                     }
                 }
@@ -60,7 +60,7 @@ namespace PaymentCard
                     {
                         debetCard.MakePayment(amount);
                         paymentSuccessful = true;
-                        Console.WriteLine($"Payment {amount} made with DebetCard");
+                        Console.WriteLine($"\nPayment {amount} made with DebetCard");
                         break;
                     }
                 }
@@ -70,15 +70,26 @@ namespace PaymentCard
                     {
                         creditCard.MakePayment(amount);
                         paymentSuccessful = true;
-                        Console.WriteLine($"Payment {amount} made with CreditCard");
+                        Console.WriteLine($"\nPayment {amount} made with CreditCard");
                         break;
                     }
                 }
+                else if (paymentMethod is BitCoin bitCoin)
+                {
+                    if (bitCoin.GetBalance() >= amount)
+                    {
+                        bitCoin.MakePayment(amount);
+                        paymentSuccessful = true;
+                        Console.WriteLine($"\nPayment {amount} made with BitCoin");
+                        break;
+                    }
+                }
+
             }
 
             if (!paymentSuccessful)
             {
-                Console.WriteLine("Payment failed. Insufficient funds.");
+                Console.WriteLine("\nPayment failed. Insufficient funds.");
             }
 
             return paymentSuccessful;
@@ -86,7 +97,7 @@ namespace PaymentCard
 
         public void DisplayBalances(List<IPayment> paymentMethods)
         {
-            Console.WriteLine("Current balances:");
+            Console.WriteLine("\nCurrent balances:");
             foreach (IPayment paymentMethod in paymentMethods)
             {
                 if (paymentMethod is Cash cash)
@@ -107,6 +118,9 @@ namespace PaymentCard
                 }
             }
         }
+
+
+        
     }
 
 

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    internal class Validity
+    public class Validity
     {
-        private int _validityDay;
+        public int _validityDay;
         public int ValidityDay
         {
             get
@@ -24,7 +24,7 @@ namespace PaymentCard
             }
         }
         
-        private int _validityYear;
+        public int _validityYear;
         public int ValidityYear
         {
             get

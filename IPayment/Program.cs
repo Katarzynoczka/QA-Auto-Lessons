@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using PaymentCard.Comparers;
 
 namespace PaymentCard
 {
@@ -37,70 +39,73 @@ namespace PaymentCard
 
             List<BankClient> bankClients = new List<BankClient> { bankClient1, bankClient2, bankClient3, bankClient4, bankClient5 };
            
-            Console.WriteLine("Sort by the name of bank client:");
-            bankClients.Sort((x, y) => string.Compare(x.Name, y.Name));
-            foreach (BankClient bankClient in bankClients) 
-            { 
-                Console.WriteLine(bankClient.Name); 
-            }
-
-            Console.WriteLine("Sort by the address of bank client:");
-            bankClients.Sort(new ClientAddresComparer());
-            foreach (BankClient bankClient in bankClients)
-            {
-                Console.WriteLine(bankClient.Addres);
-            }
-
-
-            bankClient1.AddPaymentMethod(new Cash(1000f));
+            bankClient1.AddPaymentMethod(new Cash(100000f));
             bankClient1.AddPaymentMethod(new CashBackCard(validity1, 1000, 12));
             bankClient1.AddPaymentMethod(new CreditCard(validity6, 13f, 2000f));
             bankClient1.AddPaymentMethod(new DebetCard(validity11, 100f));
-
+            //bankClient1.AddPaymentMethod(new BitCoin(100f));
 
             bankClient2.AddPaymentMethod(new Cash(10f));
-            //bankClient2.AddPaymentMethod(new CashBackCard(validity2, 100, 2));
+            bankClient2.AddPaymentMethod(new CashBackCard(validity2, 100, 2));
             bankClient2.AddPaymentMethod(new CreditCard(validity7, 22f, 100f));
             bankClient2.AddPaymentMethod(new DebetCard(validity12, 999f));
+            bankClient2.AddPaymentMethod(new BitCoin(100f));
 
             bankClient3.AddPaymentMethod(new Cash(1000f));
             bankClient3.AddPaymentMethod(new CashBackCard(validity3, 300, 5));
             bankClient3.AddPaymentMethod(new CreditCard(validity8, 1f, 150f));
-            //bankClient3.AddPaymentMethod(new DebetCard(validity13, 10f));
+            bankClient3.AddPaymentMethod(new DebetCard(validity13, 10f));
+            bankClient3.AddPaymentMethod(new BitCoin(100f));
 
             bankClient4.AddPaymentMethod(new Cash(5000f));
-            //bankClient4.AddPaymentMethod(new CashBackCard(validity4, 2200, 20));
-            //bankClient4.AddPaymentMethod(new CreditCard(validity9, 30f, 100000000f));
-            //bankClient4.AddPaymentMethod(new DebetCard(validity14, 68543f));
+            bankClient4.AddPaymentMethod(new CashBackCard(validity4, 2200, 20));
+            bankClient4.AddPaymentMethod(new CreditCard(validity9, 30f, 1000f));
+            bankClient4.AddPaymentMethod(new DebetCard(validity14, 68543f));
+            bankClient4.AddPaymentMethod(new BitCoin(100f));
 
             bankClient5.AddPaymentMethod(new Cash(10f));
             bankClient5.AddPaymentMethod(new CashBackCard(validity5, 500, 25));
-            //bankClient5.AddPaymentMethod(new CreditCard(validity10, 90f, 5555f));
-            //bankClient5.AddPaymentMethod(new DebetCard(validity15, 9999f));
+            bankClient5.AddPaymentMethod(new CreditCard(validity10, 90f, 5555f));
+            bankClient5.AddPaymentMethod(new DebetCard(validity15, 9999f));
+            bankClient5.AddPaymentMethod(new BitCoin(100f));
 
-            Console.WriteLine("Sort by the amount of plastic cards:");
-            bankClients.Sort(new ClientPaymentMethodsCountComparer());
-            foreach (BankClient bankClient in bankClients)
-            {
-               Console.WriteLine($"{bankClient.paymentMethods.Count} - { bankClient.Name} { bankClient.SurName}");
-            }
+            var sortedName = bankClients.OrderBy(x => x.Name).ToList();
 
+            var sortAddres = bankClients.OrderBy(x => x.Addres).ToList();
+
+            var sortAmountCards = bankClients.OrderBy(x => x.paymentMethods.Count).ToList();
+          
             Console.WriteLine("Sort by the total amount of money available:");
-            var comparer = new ClientTotalAmountMoneyComparer();
-            bankClients.Sort(new ClientTotalAmountMoneyComparer());
-            foreach (BankClient bankClient in bankClients)
+            var filteredClients = bankClients
+                .Select(bankClient => new {Name = bankClient.Name, Surname = bankClient.SurName, Balance = bankClient.paymentMethods.Sum(x => x.GetBalance()) })
+                .OrderBy(x => x.Balance);
+            foreach (var x in filteredClients)
             {
-                Console.WriteLine($"{comparer.GetTotalAmountMoney(bankClient)} - {bankClient.Name} {bankClient.SurName}");
+                Console.WriteLine($"{x.Balance} - {x.Name} {x.Surname}");
+            }     
+            
+            Console.WriteLine("\nList of all debet cards for the client:");
+            var sumDebet = bankClients.SelectMany(bankClient => bankClient.paymentMethods.OfType<DebetCard>(),
+             (bankClient, debetCard) => new { bankClient.Name, bankClient.SurName, debetCard.Validity, debetCard.BalanceDebet});
+
+            foreach (var x in sumDebet)
+            {
+                Console.WriteLine($"{x.Name} {x.SurName}: Validity-{x.Validity.ValidityDay}/{x.Validity.ValidityYear}, Balance-{x.BalanceDebet} ");
             }
 
-            Console.WriteLine("Sort by maximum amount of money on one method payment:");
-            var comparer1 = new ClientMaxAmountOnOnePaymentMethod();
-            bankClients.Sort(new ClientMaxAmountOnOnePaymentMethod());
-            foreach (BankClient bankClient in bankClients)
-            {
-                Console.WriteLine($"{comparer1.GetMaxAmountMoney(bankClient)} - {bankClient.Name} {bankClient.SurName}");
-            }
+            Console.WriteLine("\nThe richest client:");
+            var richestClient = bankClients.Select(bankClient => new {BankClient = bankClient, TotalBalance = bankClient.paymentMethods
+                .Sum(paymentMethod => paymentMethod.GetBalance())}).OrderByDescending(x => x.TotalBalance).First();
+            Console.WriteLine($"{richestClient.BankClient.Name} {richestClient.BankClient.SurName}: {richestClient.TotalBalance}");
 
+            Console.WriteLine("\nClients with BitCoin:");
+            var bitCoinClients = bankClients.Where(bankClient => bankClient.paymentMethods.Any(x => x is BitCoin))
+                .Select(bankClient => new { Name = bankClient.Name, Surname = bankClient.SurName, Balance = bankClient.paymentMethods.Sum(paymentMethod => paymentMethod.GetBalance()) })
+                .OrderByDescending(x => x.Balance);
+            foreach (var x in bitCoinClients)
+            {
+                Console.WriteLine($"{x.Name} {x.Surname}");
+            }
 
             bankClient1.Pay(1000);
             bankClient1.DisplayBalances(bankClient1.paymentMethods);

@@ -8,7 +8,7 @@ namespace PaymentCard
 {
     internal class DebetCard : PaymentCards
     {
-        Validity Validity { get; set; }
+        public Validity Validity { get; set; }
         public float BalanceDebet { get; set; }
 
         public DebetCard(Validity validity, float balanceDebet)

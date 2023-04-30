@@ -12,5 +12,6 @@ namespace PaymentCard
         public abstract void TopUp(float amount);
 
         public abstract float GetBalance();
+       
     }
 }
