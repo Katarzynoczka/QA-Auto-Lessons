@@ -8,7 +8,7 @@ namespace PaymentCard
 {
     public class Validity
     {
-        public int _validityDay;
+        private int _validityDay;
         public int ValidityDay
         {
             get
@@ -17,14 +17,18 @@ namespace PaymentCard
             }
             set
             {
-                if (value <= 12)
+                if (value <= 12 && value > 0)
                 {
                     _validityDay = value;
+                }
+                else
+                {
+                    throw new FormatException("Invalid month format");
                 }
             }
         }
         
-        public int _validityYear;
+        private int _validityYear;
         public int ValidityYear
         {
             get
@@ -37,10 +41,10 @@ namespace PaymentCard
                 {
                     _validityYear = value;
                 }
-                /*else
+                else
                 {
-                    _validityYear = "Your card is not valid";
-                }*/
+                    throw new FormatException("Invalid year format");
+                }
             }
         }
         public Validity(int validityDay, int validityYear)
@@ -48,6 +52,17 @@ namespace PaymentCard
             ValidityDay = validityDay;
             ValidityYear = validityYear;
         }
-        
-     }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Validity)
+                {
+                Validity validity = obj as Validity;
+                return validity.ValidityDay == ValidityDay &&
+                    validity.ValidityYear == ValidityYear;
+                }
+            return false;
+        }
+
+    }
 }

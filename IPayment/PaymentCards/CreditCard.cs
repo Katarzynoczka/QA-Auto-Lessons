@@ -6,10 +6,28 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    internal class CreditCard : PaymentCards
+    public class CreditCard : PaymentCards
     {
         Validity Validity { get; set; }
-        public float BalanceCredit { get; set; }
+        private float _balanceCredit;
+        public float BalanceCredit
+        {
+            get
+            {
+                return _balanceCredit;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The Credit balance cannot be negative");
+                }
+                else
+                {
+                    _balanceCredit = value;
+                }
+            }
+        }
         public float CreditLimit { get; set; }
 
         public CreditCard(Validity validity, float balanceCredit, float creditLimit)
@@ -17,6 +35,17 @@ namespace PaymentCard
             Validity = validity;
             BalanceCredit = balanceCredit;
             CreditLimit = creditLimit;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is CreditCard)
+            {
+                CreditCard creditCard = obj as CreditCard;
+                return creditCard.BalanceCredit == BalanceCredit &&
+                creditCard.CreditLimit == CreditLimit;
+            }
+            return false;
         }
 
         public override bool MakePayment(float amount)

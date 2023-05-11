@@ -6,13 +6,41 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    internal class BitCoin : IPayment
+    public class BitCoin : IPayment
     {
-        public float BalanceBitCoin { get; set; }
+        private float _balanceBitCoin;
+        public float BalanceBitCoin
+        {
+            get
+            {
+                return _balanceBitCoin;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The BitCoin balance cannot be negative");
+                }
+                else
+                {
+                    _balanceBitCoin = value;
+                }
+            }
+        }
 
         public BitCoin(float balanceBitCoin)
         {
             BalanceBitCoin = balanceBitCoin;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is BitCoin)
+            {
+                BitCoin bitCoin = obj as BitCoin;
+                return bitCoin.BalanceBitCoin == BalanceBitCoin;
+            }
+            return false;
         }
 
         public bool MakePayment(float amount)

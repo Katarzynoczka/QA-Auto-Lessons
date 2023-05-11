@@ -6,10 +6,28 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    internal class CashBackCard : PaymentCards
+    public class CashBackCard : PaymentCards
     {
         Validity Validity { get; set; }
-        public float BalanceCashBack { get; set; }
+        private float _balanceCashBack;
+        public float BalanceCashBack 
+        { 
+            get
+            {
+                return _balanceCashBack;
+            } 
+                set
+            {
+                if (value < 0) 
+                {
+                    throw new ArgumentException("The CashBack balance cannot be negative");
+                }
+                else
+                {
+                    _balanceCashBack = value;
+                }
+            }
+        }
         public float PercentCashBack { get; set; }
 
 
@@ -18,6 +36,17 @@ namespace PaymentCard
             Validity = validity;
             BalanceCashBack = balanceCashBack;
             PercentCashBack = percentCashBack;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is CashBackCard)
+            {
+                CashBackCard cashBackCard = obj as CashBackCard;
+                return cashBackCard.BalanceCashBack == BalanceCashBack &&
+                cashBackCard.PercentCashBack == PercentCashBack;
+            }
+            return false;
         }
 
         public override bool MakePayment(float amount)

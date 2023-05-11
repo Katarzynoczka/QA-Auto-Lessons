@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaymentCard
 {
-    abstract class PaymentCards : IPayment
+    abstract public class PaymentCards : IPayment
     {
         public abstract bool MakePayment(float amount);
         public abstract void TopUp(float amount);
